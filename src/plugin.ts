@@ -138,7 +138,7 @@ function processCallExpression(path: babel.NodePath<t.CallExpression>) {
   path.replaceWith(functionalComponent);
 }
 
-export = function(): babel.PluginObj {
+export default function(): babel.PluginObj {
   const plugin: babel.PluginObj = {
     name: "vue-tsx-functional",
     visitor: {
@@ -152,4 +152,4 @@ export = function(): babel.PluginObj {
     }
   };
   return plugin;
-};
+}
