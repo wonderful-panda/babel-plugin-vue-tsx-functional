@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Export or assignment:  export const MyComponent = ... 1`] = `
+"export const MyComponent = {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Export or assignment:  export default ... 1`] = `
+"export default {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  }
+
+};"
+`;
+
+exports[`Export or assignment:  exports.MyCompoent = ... 1`] = `
+"exports.MyComponent = {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Export or assignment:  let MyCompoent; MyComponent = ... 1`] = `
+"let MyComponent;
+MyComponent = {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Forms of marker function:  xxx.__VueFC__(...) 1`] = `
+"const MyComponent = {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Forms of marker function:  xxx.yyy.__VueFC__(...) 1`] = `
+"const MyComponent = {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Forms of marker function:  xxx['__VueFC__'](...) 1`] = `
+"const MyComponent = {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Forms of render functions:  () => <div /> 1`] = `
+"const MyComponent = {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Forms of render functions:  () => { return <div /> } 1`] = `
+"const MyComponent = {
+  functional: true,
+
+  render(h) {
+    return <div class='test' />;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Forms of render functions:  ({ ...complex... }) => <div>...</div> 1`] = `
+"const MyComponent = {
+  functional: true,
+
+  render(h, {
+    props: {
+      foo
+    },
+    data
+  }) {
+    return <div class='test'>{foo}</div>;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
+
+exports[`Forms of render functions:  ctx => <div>...</div> 1`] = `
+"const MyComponent = {
+  functional: true,
+
+  render(h, ctx) {
+    return <div class='test'>{ctx.props.foo}</div>;
+  },
+
+  name: \\"MyComponent\\"
+};"
+`;
