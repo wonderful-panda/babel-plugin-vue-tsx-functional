@@ -34,7 +34,9 @@
     "vue-tsx-support": "^2.3.2"
   },
   "peerDependencies": {
-    "@babel/core": "^7.6.3"
+    "@babel/core": "^7.6.3",
+    "vue": "^2.6.10",
+    "vue-tsx-support": "^2.3.2"
   },
   "jest": {
     "transform": {
