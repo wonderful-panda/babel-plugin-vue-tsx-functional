@@ -28,7 +28,7 @@ const MyComponent = __VueFC__<{ text: string }>(ctx => <div>{ctx.props.text}</di
 
 ## Installation
 
-1. Configure basic JSX transpilation according to (vuejs/jsx)[https://github.com/vuejs/jsx]
+1. Configure basic JSX transpilation according to [vuejs/jsx](https://github.com/vuejs/jsx)
 
 2. Install from npm.
 
