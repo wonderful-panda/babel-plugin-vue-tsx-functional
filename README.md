@@ -44,7 +44,6 @@ const MyComponent = {
   functional: true,
   render(h, ctx) {
     return <div>{ctx.props.foo}</div>;
-  },
-  name: "MyComponent"
+  }
 };
 ```

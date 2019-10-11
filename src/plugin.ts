@@ -18,10 +18,7 @@ const FUNCNAME = "__VueFC__";
  *   }
  * `
  */
-function buildFunctionalComponentObject(
-  renderFn: t.ArrowFunctionExpression,
-  componentName: string | undefined
-) {
+function buildFunctionalComponentObject(renderFn: t.ArrowFunctionExpression) {
   let body: t.BlockStatement;
   if (t.isBlockStatement(renderFn.body)) {
     body = renderFn.body;
@@ -37,11 +34,6 @@ function buildFunctionalComponentObject(
       body
     )
   ]);
-  if (componentName) {
-    ret.properties.push(
-      t.objectProperty(t.identifier("name"), t.stringLiteral(componentName))
-    );
-  }
   return ret;
 }
 
@@ -72,42 +64,25 @@ function getCalleeName(node: t.CallExpression): string | undefined {
 }
 
 /**
- * Guess component name from __VueFC__ call expression.
+ * Check specified path is assigned to variable or property, or exported
  *
  * expected patterns:
- *  1) const ComponentName = xxx.__VueFC__(...);
- *  2) obj.ComponentName = xxx.__VueFC__(...);
- *  3) ComponentName = xxx.__VueFC__(...);
- *  4) export const ComponentName = xxx.__VueFC__(...);
+ *  [export] [const|let|var] VariableName = <node>
+ *  export default <node>
+ *  obj.PropertyName = <node>
+ *  obj["PropertyName"] = <node>
  */
-function guessComponentName(
-  path: babel.NodePath<t.CallExpression>
-): string | undefined {
+function isAssignedOrExported(path: babel.NodePath<t.CallExpression>): boolean {
   const parent = path.parentPath.node;
 
-  let componentName: string | undefined;
   if (t.isAssignmentExpression(parent) && parent.right === path.node) {
-    const left = parent.left;
-    if (t.isIdentifier(left)) {
-      componentName = left.name;
-    } else if (t.isMemberExpression(left)) {
-      componentName = t.isIdentifier(left.property)
-        ? left.property.name
-        : undefined;
-    }
+    return true;
   } else if (t.isVariableDeclarator(parent)) {
-    componentName = t.isIdentifier(parent.id) ? parent.id.name : undefined;
+    return true;
   } else if (t.isExportDefaultDeclaration(parent)) {
-    // no name
+    return true;
   } else {
-    throw path.buildCodeFrameError(
-      `result of ${FUNCNAME} must be assigned or exported`
-    );
-  }
-  if (componentName && /^[A-Z]/.test(componentName)) {
-    return componentName;
-  } else {
-    return undefined;
+    return false;
   }
 }
 
@@ -130,11 +105,13 @@ function processCallExpression(path: babel.NodePath<t.CallExpression>) {
       `argument of ${FUNCNAME} must be arrow function`
     );
   }
-  const componentName = guessComponentName(path);
-  const functionalComponent = buildFunctionalComponentObject(
-    arg,
-    componentName
-  );
+
+  if (!isAssignedOrExported(path)) {
+    throw path.buildCodeFrameError(
+      `result of ${FUNCNAME} must be assigned or exported`
+    );
+  }
+  const functionalComponent = buildFunctionalComponentObject(arg);
   path.replaceWith(functionalComponent);
 }
 

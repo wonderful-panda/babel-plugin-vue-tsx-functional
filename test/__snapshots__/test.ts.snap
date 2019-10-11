@@ -6,9 +6,8 @@ exports[`Export or assignment:  export const MyComponent = ... 1`] = `
 
   render(h) {
     return <div class='test' />;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -29,9 +28,8 @@ exports[`Export or assignment:  exports.MyCompoent = ... 1`] = `
 
   render(h) {
     return <div class='test' />;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -42,9 +40,8 @@ MyComponent = {
 
   render(h) {
     return <div class='test' />;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -54,9 +51,8 @@ exports[`Forms of marker function:  xxx.__VueFC__(...) 1`] = `
 
   render(h) {
     return <div class='test' />;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -66,9 +62,8 @@ exports[`Forms of marker function:  xxx.yyy.__VueFC__(...) 1`] = `
 
   render(h) {
     return <div class='test' />;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -78,9 +73,8 @@ exports[`Forms of marker function:  xxx['__VueFC__'](...) 1`] = `
 
   render(h) {
     return <div class='test' />;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -90,9 +84,8 @@ exports[`Forms of render functions:  () => <div /> 1`] = `
 
   render(h) {
     return <div class='test' />;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -102,9 +95,8 @@ exports[`Forms of render functions:  () => { return <div /> } 1`] = `
 
   render(h) {
     return <div class='test' />;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -119,9 +111,8 @@ exports[`Forms of render functions:  ({ ...complex... }) => <div>...</div> 1`] =
     data
   }) {
     return <div class='test'>{foo}</div>;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
 
@@ -131,8 +122,7 @@ exports[`Forms of render functions:  ctx => <div>...</div> 1`] = `
 
   render(h, ctx) {
     return <div class='test'>{ctx.props.foo}</div>;
-  },
+  }
 
-  name: \\"MyComponent\\"
 };"
 `;
