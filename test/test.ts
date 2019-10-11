@@ -1,12 +1,12 @@
 import * as babel from "@babel/core";
 import jsx from "@babel/plugin-syntax-jsx";
-import plugin from "../lib/plugin";
+import plugin, { Options } from "../lib/plugin";
 
-function transform(code: string): string | undefined {
-  const opts: babel.TransformOptions = {
-    plugins: [plugin, jsx]
+function transform(code: string, opts?: Options): string | undefined {
+  const transformOpts: babel.TransformOptions = {
+    plugins: [[plugin, opts], jsx]
   };
-  const ret = babel.transform(code, opts);
+  const ret = babel.transform(code, transformOpts);
   return ret ? ret.code || undefined : undefined;
 }
 
@@ -62,6 +62,15 @@ describe("Forms of marker function: ", () => {
       `const MyComponent = xxx["__VueFC__"](() => {
         return <div class='test' />;
       })`
+    );
+    expect(code).toMatchSnapshot();
+  });
+  it("Changing marker name", () => {
+    const code = transform(
+      `const MyComponent1 = _f(() => <div />);
+      const MyComponent2 = xx._f(() => <div />);
+      const MyComponent3 = __VueFC__(() => <div />);`,
+      { funcName: "_f" }
     );
     expect(code).toMatchSnapshot();
   });

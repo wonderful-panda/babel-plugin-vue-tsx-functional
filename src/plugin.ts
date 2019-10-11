@@ -1,7 +1,13 @@
 import * as babel from "@babel/core";
 import * as t from "@babel/types";
 
-const FUNCNAME = "__VueFC__";
+export interface Options {
+  funcName?: string;
+}
+
+const defaultOptions: Required<Options> = {
+  funcName: "__VueFC__"
+};
 
 /**
  * Build object literal represents functional component.
@@ -90,43 +96,49 @@ function isAssignedOrExported(path: babel.NodePath<t.CallExpression>): boolean {
  * Replace __VueFC__ call expression by object literal which represents
  * functional component.
  */
-function processCallExpression(path: babel.NodePath<t.CallExpression>) {
+function processCallExpression(
+  path: babel.NodePath<t.CallExpression>,
+  opts: Required<Options>
+) {
   const { node } = path;
   const funcname = getCalleeName(node);
-  if (funcname !== FUNCNAME) {
+  if (funcname !== opts.funcName) {
     return;
   }
   if (node.arguments.length !== 1) {
-    throw path.buildCodeFrameError(`${FUNCNAME} must have exactly 1 argument`);
+    throw path.buildCodeFrameError(
+      `${opts.funcName} must have exactly 1 argument`
+    );
   }
   const arg = node.arguments[0];
   if (!t.isArrowFunctionExpression(arg)) {
     throw path.buildCodeFrameError(
-      `argument of ${FUNCNAME} must be arrow function`
+      `argument of ${opts.funcName} must be arrow function`
     );
   }
 
   if (!isAssignedOrExported(path)) {
     throw path.buildCodeFrameError(
-      `result of ${FUNCNAME} must be assigned or exported`
+      `result of ${opts.funcName} must be assigned or exported`
     );
   }
   const functionalComponent = buildFunctionalComponentObject(arg);
   path.replaceWith(functionalComponent);
 }
 
-export = function(): babel.PluginObj {
-  const plugin: babel.PluginObj = {
+export default function(): babel.PluginObj<{ opts: Options }> {
+  const plugin: babel.PluginObj<{ opts: Options }> = {
     name: "vue-tsx-functional",
     visitor: {
-      Program(path) {
+      Program(path, state) {
+        const opts: Required<Options> = { ...defaultOptions, ...state.opts };
         path.traverse({
           CallExpression(path) {
-            processCallExpression(path);
+            processCallExpression(path, opts);
           }
         });
       }
     }
   };
   return plugin;
-};
+}

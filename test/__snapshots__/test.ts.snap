@@ -45,6 +45,27 @@ MyComponent = {
 };"
 `;
 
+exports[`Forms of marker function:  Changing marker name 1`] = `
+"const MyComponent1 = {
+  functional: true,
+
+  render(h) {
+    return <div />;
+  }
+
+};
+const MyComponent2 = {
+  functional: true,
+
+  render(h) {
+    return <div />;
+  }
+
+};
+
+const MyComponent3 = __VueFC__(() => <div />);"
+`;
+
 exports[`Forms of marker function:  xxx.__VueFC__(...) 1`] = `
 "const MyComponent = {
   functional: true,
