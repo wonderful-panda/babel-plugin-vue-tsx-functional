@@ -19,7 +19,7 @@ Wrap arrow function by marker function `__VueFC__` which provides appropriate ty
 const MyComponent = __VueFC__<{ text: string }>(ctx => <div>{ctx.props.text}</div>);
 ```
 
-## Prerequisite
+## Requirements
 
 - TypeScript >= 3.5
 - Vue >= 2.6
@@ -42,9 +42,11 @@ const MyComponent = __VueFC__<{ text: string }>(ctx => <div>{ctx.props.text}</di
 "plugins": ["babel-plugin-vue-tsx-functional/lib/plugin"]
 ```
 
+4. Configure TSX type checking according to [vue-tsx-support](https://github.com/wonderful-panda/vue-tsx-support)
+
 ## Example
 
-Input
+### Original code (TypeScript)
 
 ```typescript
 import { __VueFC__ } from "babel-plugin-vue-tsx-functional";
@@ -54,7 +56,7 @@ const MyComponent = __VueFC__<{ foo: string }>(ctx => {
 })
 ```
 
-Intermidiate output (transpiled by tsc --module es6 --jsx preserve)
+### Intermidiate output (transpiled by tsc --module es6 --jsx preserve)
 
 ```javascript
 import { __VueFC__ } from "babel-plugin-vue-tsx-functional";
@@ -64,7 +66,9 @@ const MyComponent = __VueFC__(ctx => {
 })
 ```
 
-Intermidiate output (transpiled by this plugin)
+NOTE: ---module es6 is recomended, but other settings (amd, umd, commonjs) also work.
+
+### Intermidiate output (transpiled by this plugin)
 
 ```javascript
 import { __VueFC__ } from "babel-plugin-vue-tsx-functional";
@@ -77,7 +81,7 @@ const MyComponent = {
 };
 ```
 
-Output (transpiled by @vue/preset-jsx)
+### Final output (transpiled by @vue/preset-jsx, etc)
 
 ```javascript
 import { __VueFC__ } from "babel-plugin-vue-tsx-functional";
@@ -100,3 +104,18 @@ const MyComponent = {
 ### funcName (string)
 
 Specify marker function name. (default: `__VueFC__`)
+
+## Tips
+
+You can declare marker function globally.
+You can use marker function without import by this.
+
+```typescript
+declare global {
+  const __VueFC__: typeof import("babel-plugin-vue-tsx-functional").__VueFC__;
+}
+```
+
+## License
+
+MIT
